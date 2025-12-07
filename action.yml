@@ -1,19 +1,36 @@
-name: "Moropo - Trigger Mobile App Test Run"
-author: "Moropo Limited"
-description: "Uses Moropo.com to execute a mobile app UI test"
+name: 'Moropo - Trigger Mobile App Test Run'
+author: 'Moropo'
+description: 'Uses Moropo.com to execute a mobile app UI test'
 inputs:
   scheduled_test_id:
-    description: "Moropo Scheduled Test ID - find this in your scheduled test setup wizard"
+    description: 'Moropo Scheduled Test ID - find this in your scheduled test setup wizard'
     required: true
-  app_secret:
-    description: "Moropo App Secret Key - find this in your app in the Moropo dashboard"
+  api_key:
+    description: 'Moropo Api Key - find this in your app settings in the Moropo dashboard'
     required: true
   expo_release_channel:
-    description: "Expo Release Channel (optional) - requires Moropo-Expo integration setup. Tell Moropo to pull a new Expo update for this test run."
+    description: 'Expo Release Channel (optional) - Pass this release channel to your test run'
     required: false
+  github_token:
+    description: 'GitHub access token (optional) - so that the action can comment on the PR with the test trigger feedback'
+    required: false
+    default: ${{ github.token }}
+  build_path:
+    description: 'Path to the build artifact to upload to Moropo before running the test'
+    required: false
+  moropo_api_url:
+    description: 'For development purposes only - choose a different moropo API URL'
+    default: 'https://api.moropo.com'
+  sync:
+    description: 'Enables the action to run synchronously, allows comments and checks to be updated without a Github PAT'
+    default: false
+  env:
+    description: 'Env variables to be passed into the tests, must be in stringified JSON format (e.g. "{ "key": "value" }").'
+    required: false
+
 runs:
-  using: "node16"
-  main: "dist/index.js"
+  using: 'node20'
+  main: 'dist/index.js'
 branding:
-  icon: "check"
-  color: "blue"
+  icon: 'check'
+  color: 'blue'
